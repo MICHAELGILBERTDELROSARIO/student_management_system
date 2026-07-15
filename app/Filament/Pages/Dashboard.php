@@ -2,7 +2,16 @@
 
 namespace App\Filament\Pages;
 
+use App\Filament\Widgets\AdminStatsWidget;
+use App\Filament\Widgets\EditorStatsWidget;
+use App\Filament\Widgets\GradesPerCourseTableWidget;
+use App\Filament\Widgets\RecentGradesTableWidget;
+use App\Filament\Widgets\RecentStudentsTableWidget;
+use App\Filament\Widgets\StudentAttendanceTableWidget;
+use App\Filament\Widgets\StudentGradesTableWidget;
+use App\Filament\Widgets\StudentStatsWidget;
 use BackedEnum;
+use Filament\Panel;
 use Filament\Support\Icons\Heroicon;
 
 class Dashboard extends \Filament\Pages\Dashboard
@@ -15,7 +24,7 @@ class Dashboard extends \Filament\Pages\Dashboard
 
     protected static ?int $navigationSort = -2;
 
-    public static function getRoutePath(\Filament\Panel $panel): string
+    public static function getRoutePath(Panel $panel): string
     {
         return '/';
     }
@@ -31,23 +40,30 @@ class Dashboard extends \Filament\Pages\Dashboard
 
         if ($user->isAdmin()) {
             return [
-                \App\Filament\Widgets\AdminStatsWidget::class,
-                \App\Filament\Widgets\GradesPerCourseTableWidget::class,
-                \App\Filament\Widgets\RecentStudentsTableWidget::class,
+                AdminStatsWidget::class,
+                GradesPerCourseTableWidget::class,
+                RecentStudentsTableWidget::class,
             ];
         }
 
         if ($user->isEditor()) {
             return [
-                \App\Filament\Widgets\EditorStatsWidget::class,
-                \App\Filament\Widgets\RecentGradesTableWidget::class,
+                EditorStatsWidget::class,
+                RecentGradesTableWidget::class,
             ];
         }
 
         return [
-            \App\Filament\Widgets\StudentStatsWidget::class,
-            \App\Filament\Widgets\StudentGradesTableWidget::class,
-            \App\Filament\Widgets\StudentAttendanceTableWidget::class,
+            StudentStatsWidget::class,
+            StudentGradesTableWidget::class,
+            StudentAttendanceTableWidget::class,
+        ];
+    }
+
+    public function getPageClasses(): array
+    {
+        return [
+            'page-dashboard',
         ];
     }
 }

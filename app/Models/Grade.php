@@ -45,7 +45,7 @@ class Grade extends Model
     public function getTitleAttribute(): ?string
     {
         return $this->student
-            ? $this->student->student_number . ' - ' . ($this->subject->subject_name ?? 'No Subject')
+            ? $this->student->student_number.' - '.($this->subject->subject_name ?? 'No Subject')
             : null;
     }
 }

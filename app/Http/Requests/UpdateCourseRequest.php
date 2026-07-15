@@ -16,7 +16,7 @@ class UpdateCourseRequest extends FormRequest
         $course = $this->route('course');
 
         return [
-            'course_code' => ['required', 'string', 'max:255', 'unique:courses,course_code,' . $course->id],
+            'course_code' => ['required', 'string', 'max:255', 'unique:courses,course_code,'.$course->id],
             'course_name' => ['required', 'string', 'max:255'],
         ];
     }

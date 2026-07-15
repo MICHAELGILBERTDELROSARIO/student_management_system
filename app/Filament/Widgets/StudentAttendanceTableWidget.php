@@ -3,8 +3,6 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Attendance;
-use App\Models\Student;
-use Filament\Tables;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -14,12 +12,12 @@ class StudentAttendanceTableWidget extends BaseTableWidget
 {
     protected static ?string $heading = 'Recent Attendance';
 
-    protected int | string | array $span = 'full';
+    protected int|string|array $span = 'full';
 
     public function table(Table $table): Table
     {
         $user = auth()->user();
-        $student = Student::where('email', $user->email)->first();
+        $student = $user->student;
 
         if (! $student) {
             return $table->query(Attendance::where('id', 0))->columns([]);

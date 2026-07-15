@@ -1,19 +1,22 @@
 <?php
 
+use App\Models\Student;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\User;
-use App\Models\Student;
 
 return new class extends Migration
 {
     public function up(): void
     {
         Student::whereNull('user_id')->each(function (Student $student) {
+            $name = $student->first_name.' '.$student->last_name;
+            $email = strtolower($student->first_name.'.'.$student->last_name.'@student.local');
+
             $user = User::create([
-                'name' => $student->first_name . ' ' . $student->last_name,
-                'email' => $student->email,
+                'name' => $name,
+                'email' => $email,
                 'password' => bcrypt('password'),
                 'role' => User::ROLE_STUDENT,
             ]);

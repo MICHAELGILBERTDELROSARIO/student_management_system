@@ -25,6 +25,11 @@ class UsersTable
                     ->sortable(),
                 TextColumn::make('role')
                     ->searchable(),
+                TextColumn::make('student.student_number')
+                    ->label('Student Number')
+                    ->searchable()
+                    ->sortable()
+                    ->placeholder('Not linked'),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

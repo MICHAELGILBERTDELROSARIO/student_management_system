@@ -8,8 +8,6 @@ use App\Filament\Resources\Attendances\Pages\ListAttendances;
 use App\Filament\Resources\Attendances\Schemas\AttendanceForm;
 use App\Filament\Resources\Attendances\Tables\AttendancesTable;
 use App\Models\Attendance;
-use App\Models\Student;
-use App\Models\User;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -49,7 +47,7 @@ class AttendanceResource extends Resource
         $query = parent::getEloquentQuery();
 
         if (auth()->check() && auth()->user()->isStudent()) {
-            $student = Student::where('email', auth()->user()->email)->first();
+            $student = auth()->user()->student;
             if ($student) {
                 $query->where('student_id', $student->id);
             } else {

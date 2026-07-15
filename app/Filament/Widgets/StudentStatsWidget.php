@@ -2,9 +2,6 @@
 
 namespace App\Filament\Widgets;
 
-use App\Models\Attendance;
-use App\Models\Grade;
-use App\Models\Student;
 use Filament\Widgets\StatsOverviewWidget as BaseStatsOverviewWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 
@@ -15,7 +12,7 @@ class StudentStatsWidget extends BaseStatsOverviewWidget
     protected function getStats(): array
     {
         $user = auth()->user();
-        $student = Student::where('email', $user->email)->first();
+        $student = $user->student;
 
         $myGrades = $student ? $student->grades()->count() : 0;
         $myAttendance = $student ? $student->attendances()->count() : 0;

@@ -8,8 +8,6 @@ use App\Filament\Resources\Grades\Pages\ListGrades;
 use App\Filament\Resources\Grades\Schemas\GradeForm;
 use App\Filament\Resources\Grades\Tables\GradesTable;
 use App\Models\Grade;
-use App\Models\Student;
-use App\Models\User;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -58,7 +56,7 @@ class GradeResource extends Resource
         $query = parent::getEloquentQuery();
 
         if (auth()->check() && auth()->user()->isStudent()) {
-            $student = Student::where('email', auth()->user()->email)->first();
+            $student = auth()->user()->student;
             if ($student) {
                 $query->where('student_id', $student->id);
             } else {

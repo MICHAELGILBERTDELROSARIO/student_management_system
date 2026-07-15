@@ -1,0 +1,9 @@
+.fi-main:has(.page-dashboard) {
+    background: linear-gradient(135deg, #064e3b 0%, #7f1d1d 100%);
+    min-height: 100vh;
+}
+
+.page-dashboard > * {
+    position: relative;
+    z-index: 1;
+}

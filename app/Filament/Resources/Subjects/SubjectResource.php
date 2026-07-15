@@ -8,7 +8,6 @@ use App\Filament\Resources\Subjects\Pages\ListSubjects;
 use App\Filament\Resources\Subjects\Schemas\SubjectForm;
 use App\Filament\Resources\Subjects\Tables\SubjectsTable;
 use App\Models\Subject;
-use App\Models\User;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;

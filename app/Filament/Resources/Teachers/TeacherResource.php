@@ -8,7 +8,6 @@ use App\Filament\Resources\Teachers\Pages\ListTeachers;
 use App\Filament\Resources\Teachers\Schemas\TeacherForm;
 use App\Filament\Resources\Teachers\Tables\TeachersTable;
 use App\Models\Teacher;
-use App\Models\User;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;

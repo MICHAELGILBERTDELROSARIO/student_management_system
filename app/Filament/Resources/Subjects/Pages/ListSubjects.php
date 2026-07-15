@@ -3,8 +3,12 @@
 namespace App\Filament\Resources\Subjects\Pages;
 
 use App\Filament\Resources\Subjects\SubjectResource;
+use App\Models\Course;
+use App\Models\Subject;
 use Filament\Actions\Action;
 use Filament\Actions\CreateAction;
+use Filament\Forms\Components\CheckboxList;
+use Filament\Forms\Components\Textarea;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ListRecords;
 
@@ -21,15 +25,15 @@ class ListSubjects extends ListRecords
                 ->modalHeading('Bulk Create Subjects')
                 ->modalDescription('Enter multiple subject names and assign them to one or more courses.')
                 ->form([
-                    \Filament\Forms\Components\Textarea::make('subjects')
+                    Textarea::make('subjects')
                         ->label('Subject Names')
                         ->placeholder("Programming Fundamentals\nDatabase Management Systems\nWeb Development")
                         ->rows(12)
                         ->required()
                         ->helperText('Enter one subject per line.'),
-                    \Filament\Forms\Components\CheckboxList::make('courses')
+                    CheckboxList::make('courses')
                         ->label('Courses')
-                        ->options(\App\Models\Course::pluck('course_name', 'id')->toArray())
+                        ->options(Course::pluck('course_name', 'id')->toArray())
                         ->required()
                         ->columns(2)
                         ->helperText('Select one or more courses.'),
@@ -42,6 +46,7 @@ class ListSubjects extends ListRecords
                             ->title('Please enter at least one subject.')
                             ->danger()
                             ->send();
+
                         return;
                     }
 
@@ -50,6 +55,7 @@ class ListSubjects extends ListRecords
                             ->title('Please select at least one course.')
                             ->danger()
                             ->send();
+
                         return;
                     }
 
@@ -57,7 +63,7 @@ class ListSubjects extends ListRecords
 
                     foreach ($data['courses'] as $courseId) {
                         foreach ($subjects as $subjectName) {
-                            $subject = \App\Models\Subject::firstOrCreate(['subject_name' => $subjectName]);
+                            $subject = Subject::firstOrCreate(['subject_name' => $subjectName]);
 
                             if (! $subject->courses()->where('course_id', $courseId)->exists()) {
                                 $subject->courses()->attach($courseId);

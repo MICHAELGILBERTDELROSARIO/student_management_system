@@ -2,12 +2,7 @@
 
 namespace App\Filament\Widgets;
 
-use App\Models\Grade;
 use App\Models\Student;
-use Filament\Schemas\Components\Component;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Schema;
-use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseTableWidget;
@@ -16,7 +11,7 @@ class RecentStudentsTableWidget extends BaseTableWidget
 {
     protected static ?string $heading = 'Recent Students';
 
-    protected int | string | array $span = 'full';
+    protected int|string|array $span = 'full';
 
     public function table(Table $table): Table
     {
@@ -38,15 +33,9 @@ class RecentStudentsTableWidget extends BaseTableWidget
                 TextColumn::make('last_name')
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('email')
-                    ->searchable()
-                    ->toggleable(),
                 TextColumn::make('course.course_name')
                     ->label('Course')
                     ->searchable()
-                    ->sortable(),
-                TextColumn::make('birth_date')
-                    ->date()
                     ->sortable(),
             ]);
     }

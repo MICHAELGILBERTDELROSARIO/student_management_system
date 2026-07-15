@@ -5,10 +5,10 @@ namespace App\Filament\Resources\Students;
 use App\Filament\Resources\Students\Pages\CreateStudent;
 use App\Filament\Resources\Students\Pages\EditStudent;
 use App\Filament\Resources\Students\Pages\ListStudents;
+use App\Filament\Resources\Students\RelationManagers\GradesRelationManager;
 use App\Filament\Resources\Students\Schemas\StudentForm;
 use App\Filament\Resources\Students\Tables\StudentsTable;
 use App\Models\Student;
-use App\Models\User;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -37,7 +37,7 @@ class StudentResource extends Resource
     public static function getRelations(): array
     {
         return [
-            \App\Filament\Resources\Students\RelationManagers\GradesRelationManager::class,
+            GradesRelationManager::class,
         ];
     }
 
@@ -55,7 +55,7 @@ class StudentResource extends Resource
         $query = parent::getEloquentQuery();
 
         if (auth()->check() && auth()->user()->isStudent()) {
-            $student = static::where('email', auth()->user()->email)->first();
+            $student = auth()->user()->student;
             if ($student) {
                 $query->where('id', $student->id);
             } else {

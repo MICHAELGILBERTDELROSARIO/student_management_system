@@ -6,7 +6,6 @@ use App\Models\Attendance;
 use App\Models\Course;
 use App\Models\Grade;
 use App\Models\Student;
-use App\Models\User;
 use BackedEnum;
 use Filament\Pages\Page;
 use Filament\Schemas\Components\Flex;
@@ -60,7 +59,7 @@ class Reports extends Page
             Stat::make('Average Grade', number_format($averageGrade ?? 0, 2))
                 ->description('Across all subjects')
                 ->icon('heroicon-o-chart-bar'),
-            Stat::make('Attendance Rate', number_format($attendanceRate, 1) . '%')
+            Stat::make('Attendance Rate', number_format($attendanceRate, 1).'%')
                 ->description('Overall attendance')
                 ->icon('heroicon-o-check-circle'),
         ];
@@ -94,8 +93,8 @@ class Reports extends Page
             fn (array $course) => Grid::make(3)
                 ->schema([
                     Text::make($course['label']),
-                    Text::make((string) $course['students'] . ' students'),
-                    Text::make('Avg: ' . $course['avg_grade']),
+                    Text::make((string) $course['students'].' students'),
+                    Text::make('Avg: '.$course['avg_grade']),
                 ])
         )->toArray();
 

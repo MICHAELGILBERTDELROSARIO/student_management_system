@@ -37,7 +37,7 @@ class AdminStatsWidget extends BaseStatsOverviewWidget
             Stat::make('Average Grade', number_format($averageGrade ?? 0, 2))
                 ->description('Across all subjects')
                 ->icon('heroicon-o-chart-bar'),
-            Stat::make('Attendance Rate', number_format($attendanceRate, 1) . '%')
+            Stat::make('Attendance Rate', number_format($attendanceRate, 1).'%')
                 ->description('Overall attendance')
                 ->icon('heroicon-o-check-circle'),
             Stat::make('Total Subjects', $totalSubjects)

@@ -45,7 +45,7 @@ class StatsOverviewWidget extends BaseStatsOverviewWidget
                 ->icon('heroicon-o-chart-bar')
                 ->color('primary'),
 
-            Stat::make('Pass Rate', $passRate . '%')
+            Stat::make('Pass Rate', $passRate.'%')
                 ->description("$passed passed / $failed failed")
                 ->descriptionIcon('heroicon-m-check-badge')
                 ->icon('heroicon-o-check-circle')

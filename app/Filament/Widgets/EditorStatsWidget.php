@@ -3,7 +3,6 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Attendance;
-use App\Models\Course;
 use App\Models\Grade;
 use App\Models\Student;
 use App\Models\Subject;

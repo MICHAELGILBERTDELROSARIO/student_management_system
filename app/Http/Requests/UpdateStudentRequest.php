@@ -16,10 +16,9 @@ class UpdateStudentRequest extends FormRequest
         $student = $this->route('student');
 
         return [
-            'student_number' => ['required', 'string', 'max:255', 'unique:students,student_number,' . $student->id],
+            'student_number' => ['required', 'string', 'max:255', 'unique:students,student_number,'.$student->id],
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255', 'unique:students,email,' . $student->id],
             'gender' => ['required', 'in:male,female'],
             'birth_date' => ['required', 'date'],
             'course_id' => ['required', 'exists:courses,id'],

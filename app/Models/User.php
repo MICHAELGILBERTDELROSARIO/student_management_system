@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,12 +18,16 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable, HasRoles;
+    use HasFactory, HasRoles, Notifiable;
 
     protected $guard_name = 'web';
+
     public const ROLE_ADMIN = 'admin';
+
     public const ROLE_STUDENT = 'student';
+
     public const ROLE_EDITOR = 'editor';
+
     public const ROLE_USER = 'user';
 
     public const ROLES = [
@@ -67,6 +72,11 @@ class User extends Authenticatable
             self::ROLE_EDITOR => 'editor.dashboard',
             default => 'student.dashboard',
         };
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return true;
     }
 
     protected static function booted(): void

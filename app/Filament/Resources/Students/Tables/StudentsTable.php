@@ -14,10 +14,6 @@ class StudentsTable
     {
         return $table
             ->columns([
-                TextColumn::make('user.name')
-                    ->label('User')
-                    ->searchable()
-                    ->sortable(),
                 TextColumn::make('student_number')
                     ->searchable(),
                 TextColumn::make('first_name')
@@ -33,6 +29,11 @@ class StudentsTable
                     ->label('Course')
                     ->searchable()
                     ->sortable(),
+                TextColumn::make('user_id')
+                    ->label('Has Account')
+                    ->formatStateUsing(fn ($state) => $state ? 'Yes' : 'No')
+                    ->badge()
+                    ->color(fn ($state) => $state ? 'success' : 'gray'),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

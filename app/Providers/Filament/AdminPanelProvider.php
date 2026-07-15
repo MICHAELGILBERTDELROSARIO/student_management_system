@@ -4,6 +4,13 @@ namespace App\Providers\Filament;
 
 use App\Filament\Pages\Dashboard;
 use App\Filament\Pages\Reports;
+use App\Filament\Resources\Attendances\AttendanceResource;
+use App\Filament\Resources\Courses\CourseResource;
+use App\Filament\Resources\Grades\GradeResource;
+use App\Filament\Resources\Students\StudentResource;
+use App\Filament\Resources\Subjects\SubjectResource;
+use App\Filament\Resources\Teachers\TeacherResource;
+use App\Filament\Resources\Users\UserResource;
 use App\Filament\Widgets\AccountWidget;
 use App\Filament\Widgets\FilamentInfoWidget;
 use App\Filament\Widgets\GradeResultsChart;
@@ -15,11 +22,14 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\NavigationBuilder;
 use Filament\Navigation\NavigationGroup;
 use Filament\Navigation\NavigationItem;
 use Filament\Panel;
 use Filament\PanelProvider;
+use Filament\Support\Assets\Css;
 use Filament\Support\Colors\Color;
+use Filament\Support\Enums\Width;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
@@ -37,7 +47,12 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->colors([
-                'primary' => Color::Indigo,
+                'primary' => Color::Emerald,
+            ])
+            ->maxContentWidth(Width::Full)
+            ->assets([
+                Css::make('dashboard-gradient')->relativePublicPath('css/dashboard-gradient.css'),
+                Css::make('admin-design')->relativePublicPath('css/admin-design.css'),
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
@@ -52,64 +67,64 @@ class AdminPanelProvider extends PanelProvider
                     return true;
                 }
 
-                $builder = new \Filament\Navigation\NavigationBuilder();
+                $builder = new NavigationBuilder;
 
                 if ($user->isAdmin()) {
                     $builder->groups([
-                        \Filament\Navigation\NavigationGroup::make('Management')
+                        NavigationGroup::make('Management')
                             ->items([
-                                \Filament\Navigation\NavigationItem::make('Dashboard')
+                                NavigationItem::make('Dashboard')
                                     ->icon('heroicon-o-home')
                                     ->activeIcon('heroicon-s-home')
                                     ->url(Dashboard::getUrl())
                                     ->isActiveWhen(fn (): bool => request()->routeIs('filament.admin.pages.dashboard'))
                                     ->sort(-2),
-                                \Filament\Navigation\NavigationItem::make('Students')
+                                NavigationItem::make('Students')
                                     ->icon('heroicon-o-users')
                                     ->activeIcon('heroicon-s-users')
-                                    ->url(fn (): string => \App\Filament\Resources\Students\StudentResource::getUrl())
+                                    ->url(fn (): string => StudentResource::getUrl())
                                     ->isActiveWhen(fn (): bool => request()->routeIs('filament.admin.resources.students.*'))
                                     ->sort(1),
-                                \Filament\Navigation\NavigationItem::make('Courses')
+                                NavigationItem::make('Courses')
                                     ->icon('heroicon-o-book-open')
                                     ->activeIcon('heroicon-s-book-open')
-                                    ->url(fn (): string => \App\Filament\Resources\Courses\CourseResource::getUrl())
+                                    ->url(fn (): string => CourseResource::getUrl())
                                     ->isActiveWhen(fn (): bool => request()->routeIs('filament.admin.resources.courses.*'))
                                     ->sort(2),
-                                \Filament\Navigation\NavigationItem::make('Grades')
+                                NavigationItem::make('Grades')
                                     ->icon('heroicon-o-clipboard-document-list')
                                     ->activeIcon('heroicon-s-clipboard-document-list')
-                                    ->url(fn (): string => \App\Filament\Resources\Grades\GradeResource::getUrl())
+                                    ->url(fn (): string => GradeResource::getUrl())
                                     ->isActiveWhen(fn (): bool => request()->routeIs('filament.admin.resources.grades.*'))
                                     ->sort(3),
-                                \Filament\Navigation\NavigationItem::make('Attendance')
+                                NavigationItem::make('Attendance')
                                     ->icon('heroicon-o-calendar')
                                     ->activeIcon('heroicon-s-calendar')
-                                    ->url(fn (): string => \App\Filament\Resources\Attendances\AttendanceResource::getUrl())
+                                    ->url(fn (): string => AttendanceResource::getUrl())
                                     ->isActiveWhen(fn (): bool => request()->routeIs('filament.admin.resources.attendances.*'))
                                     ->sort(4),
-                                \Filament\Navigation\NavigationItem::make('Teachers')
+                                NavigationItem::make('Teachers')
                                     ->icon('heroicon-o-user-group')
                                     ->activeIcon('heroicon-s-user-group')
-                                    ->url(fn (): string => \App\Filament\Resources\Teachers\TeacherResource::getUrl())
+                                    ->url(fn (): string => TeacherResource::getUrl())
                                     ->isActiveWhen(fn (): bool => request()->routeIs('filament.admin.resources.teachers.*'))
                                     ->sort(5),
-                                \Filament\Navigation\NavigationItem::make('Subjects')
+                                NavigationItem::make('Subjects')
                                     ->icon('heroicon-o-academic-cap')
                                     ->activeIcon('heroicon-s-academic-cap')
-                                    ->url(fn (): string => \App\Filament\Resources\Subjects\SubjectResource::getUrl())
+                                    ->url(fn (): string => SubjectResource::getUrl())
                                     ->isActiveWhen(fn (): bool => request()->routeIs('filament.admin.resources.subjects.*'))
                                     ->sort(6),
                             ]),
-                        \Filament\Navigation\NavigationGroup::make('System')
+                        NavigationGroup::make('System')
                             ->items([
-                                \Filament\Navigation\NavigationItem::make('Users')
+                                NavigationItem::make('Users')
                                     ->icon('heroicon-o-user')
                                     ->activeIcon('heroicon-s-user')
-                                    ->url(fn (): string => \App\Filament\Resources\Users\UserResource::getUrl())
+                                    ->url(fn (): string => UserResource::getUrl())
                                     ->isActiveWhen(fn (): bool => request()->routeIs('filament.admin.resources.users.*'))
                                     ->sort(7),
-                                \Filament\Navigation\NavigationItem::make('Reports')
+                                NavigationItem::make('Reports')
                                     ->icon('heroicon-o-chart-bar')
                                     ->activeIcon('heroicon-s-chart-bar')
                                     ->url(fn (): string => Reports::getUrl())
@@ -123,36 +138,36 @@ class AdminPanelProvider extends PanelProvider
 
                 if ($user->isEditor()) {
                     $builder->groups([
-                        \Filament\Navigation\NavigationGroup::make('Management')
+                        NavigationGroup::make('Management')
                             ->items([
-                                \Filament\Navigation\NavigationItem::make('Dashboard')
+                                NavigationItem::make('Dashboard')
                                     ->icon('heroicon-o-home')
                                     ->activeIcon('heroicon-s-home')
                                     ->url(Dashboard::getUrl())
                                     ->isActiveWhen(fn (): bool => request()->routeIs('filament.admin.pages.dashboard'))
                                     ->sort(-2),
-                                \Filament\Navigation\NavigationItem::make('Students')
+                                NavigationItem::make('Students')
                                     ->icon('heroicon-o-users')
                                     ->activeIcon('heroicon-s-users')
-                                    ->url(fn (): string => \App\Filament\Resources\Students\StudentResource::getUrl())
+                                    ->url(fn (): string => StudentResource::getUrl())
                                     ->isActiveWhen(fn (): bool => request()->routeIs('filament.admin.resources.students.*'))
                                     ->sort(1),
-                                \Filament\Navigation\NavigationItem::make('Grades')
+                                NavigationItem::make('Grades')
                                     ->icon('heroicon-o-clipboard-document-list')
                                     ->activeIcon('heroicon-s-clipboard-document-list')
-                                    ->url(fn (): string => \App\Filament\Resources\Grades\GradeResource::getUrl())
+                                    ->url(fn (): string => GradeResource::getUrl())
                                     ->isActiveWhen(fn (): bool => request()->routeIs('filament.admin.resources.grades.*'))
                                     ->sort(2),
-                                \Filament\Navigation\NavigationItem::make('Attendance')
+                                NavigationItem::make('Attendance')
                                     ->icon('heroicon-o-calendar')
                                     ->activeIcon('heroicon-s-calendar')
-                                    ->url(fn (): string => \App\Filament\Resources\Attendances\AttendanceResource::getUrl())
+                                    ->url(fn (): string => AttendanceResource::getUrl())
                                     ->isActiveWhen(fn (): bool => request()->routeIs('filament.admin.resources.attendances.*'))
                                     ->sort(3),
                             ]),
-                        \Filament\Navigation\NavigationGroup::make('System')
+                        NavigationGroup::make('System')
                             ->items([
-                                \Filament\Navigation\NavigationItem::make('Reports')
+                                NavigationItem::make('Reports')
                                     ->icon('heroicon-o-chart-bar')
                                     ->activeIcon('heroicon-s-chart-bar')
                                     ->url(fn (): string => Reports::getUrl())
@@ -166,9 +181,9 @@ class AdminPanelProvider extends PanelProvider
 
                 if ($user->isStudent()) {
                     $builder->groups([
-                        \Filament\Navigation\NavigationGroup::make('Student')
+                        NavigationGroup::make('Student')
                             ->items([
-                                \Filament\Navigation\NavigationItem::make('My Dashboard')
+                                NavigationItem::make('My Dashboard')
                                     ->icon('heroicon-o-home')
                                     ->activeIcon('heroicon-s-home')
                                     ->url(Dashboard::getUrl())

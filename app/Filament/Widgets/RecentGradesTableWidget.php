@@ -3,7 +3,6 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Grade;
-use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseTableWidget;
@@ -12,7 +11,7 @@ class RecentGradesTableWidget extends BaseTableWidget
 {
     protected static ?string $heading = 'Recent Grades';
 
-    protected int | string | array $span = 'full';
+    protected int|string|array $span = 'full';
 
     public function table(Table $table): Table
     {

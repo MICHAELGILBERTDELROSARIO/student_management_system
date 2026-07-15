@@ -1,0 +1,67 @@
+.fi-sidebar {
+    background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%) !important;
+}
+
+.fi-sidebar .fi-sidebar-group,
+.fi-sidebar .fi-sidebar-item {
+    color: #cbd5e1 !important;
+}
+
+.fi-sidebar .fi-sidebar-item:hover,
+.fi-sidebar .fi-sidebar-item.active {
+    background: rgba(59, 130, 246, 0.15) !important;
+    color: #f1f5f9 !important;
+}
+
+.fi-sidebar .fi-sidebar-item.active {
+    border-right: 3px solid #3b82f6 !important;
+}
+
+.fi-topbar {
+    background: #ffffff !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+}
+
+.fi-main {
+    background: #f1f5f9 !important;
+}
+
+.fi-stat {
+    background: #ffffff !important;
+    border-radius: 12px !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+    border-top: 4px solid #3b82f6 !important;
+}
+
+.fi-stat:nth-child(2) {
+    border-top-color: #10b981 !important;
+}
+
+.fi-stat:nth-child(3) {
+    border-top-color: #f59e0b !important;
+}
+
+.fi-stat:nth-child(4) {
+    border-top-color: #6366f1 !important;
+}
+
+.fi-stat:nth-child(5) {
+    border-top-color: #ec4899 !important;
+}
+
+.fi-stat:nth-child(6) {
+    border-top-color: #14b8a6 !important;
+}
+
+.fi-page-header {
+    background: #ffffff !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+}
+
+.fi-btn-primary {
+    background: #3b82f6 !important;
+}
+
+.fi-btn-primary:hover {
+    background: #2563eb !important;
+}

@@ -11,7 +11,7 @@ class GradeResultsChart extends ChartWidget
 
     protected ?string $pollingInterval = null;
 
-    protected int | string | array $columnSpan = 1;
+    protected int|string|array $columnSpan = 1;
 
     protected function getType(): string
     {

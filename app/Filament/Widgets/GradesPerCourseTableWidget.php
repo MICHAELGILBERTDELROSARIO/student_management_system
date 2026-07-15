@@ -3,8 +3,6 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Course;
-use App\Models\Grade;
-use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseTableWidget;
@@ -13,7 +11,7 @@ class GradesPerCourseTableWidget extends BaseTableWidget
 {
     protected static ?string $heading = 'Grades Per Course';
 
-    protected int | string | array $span = 'full';
+    protected int|string|array $span = 'full';
 
     public function table(Table $table): Table
     {
