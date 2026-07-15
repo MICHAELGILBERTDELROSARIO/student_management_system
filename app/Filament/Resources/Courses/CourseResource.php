@@ -8,6 +8,7 @@ use App\Filament\Resources\Courses\Pages\ListCourses;
 use App\Filament\Resources\Courses\Schemas\CourseForm;
 use App\Filament\Resources\Courses\Tables\CoursesTable;
 use App\Models\Course;
+use App\Models\User;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -46,5 +47,20 @@ class CourseResource extends Resource
             'create' => CreateCourse::route('/create'),
             'edit' => EditCourse::route('/{record}/edit'),
         ];
+    }
+
+    public static function canViewAny(): bool
+    {
+        $user = auth()->user();
+
+        if (! $user) {
+            return false;
+        }
+
+        if ($user->isAdmin() || $user->isEditor()) {
+            return true;
+        }
+
+        return $user->can('manage courses');
     }
 }

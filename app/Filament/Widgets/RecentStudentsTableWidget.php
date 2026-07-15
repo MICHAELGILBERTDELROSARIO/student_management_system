@@ -2,7 +2,11 @@
 
 namespace App\Filament\Widgets;
 
+use App\Models\Grade;
 use App\Models\Student;
+use Filament\Schemas\Components\Component;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;

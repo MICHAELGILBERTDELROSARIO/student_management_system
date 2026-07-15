@@ -14,14 +14,15 @@ class StudentsTable
     {
         return $table
             ->columns([
+                TextColumn::make('user.name')
+                    ->label('User')
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('student_number')
                     ->searchable(),
                 TextColumn::make('first_name')
                     ->searchable(),
                 TextColumn::make('last_name')
-                    ->searchable(),
-                TextColumn::make('email')
-                    ->label('Email address')
                     ->searchable(),
                 TextColumn::make('gender')
                     ->badge(),

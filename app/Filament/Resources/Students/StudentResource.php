@@ -8,11 +8,13 @@ use App\Filament\Resources\Students\Pages\ListStudents;
 use App\Filament\Resources\Students\Schemas\StudentForm;
 use App\Filament\Resources\Students\Tables\StudentsTable;
 use App\Models\Student;
+use App\Models\User;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class StudentResource extends Resource
 {
@@ -46,5 +48,36 @@ class StudentResource extends Resource
             'create' => CreateStudent::route('/create'),
             'edit' => EditStudent::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        $query = parent::getEloquentQuery();
+
+        if (auth()->check() && auth()->user()->isStudent()) {
+            $student = static::where('email', auth()->user()->email)->first();
+            if ($student) {
+                $query->where('id', $student->id);
+            } else {
+                $query->where('id', 0);
+            }
+        }
+
+        return $query;
+    }
+
+    public static function canViewAny(): bool
+    {
+        $user = auth()->user();
+
+        if (! $user) {
+            return false;
+        }
+
+        if ($user->isAdmin()) {
+            return true;
+        }
+
+        return $user->can('manage students');
     }
 }

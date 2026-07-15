@@ -8,6 +8,7 @@ use App\Filament\Resources\Subjects\Pages\ListSubjects;
 use App\Filament\Resources\Subjects\Schemas\SubjectForm;
 use App\Filament\Resources\Subjects\Tables\SubjectsTable;
 use App\Models\Subject;
+use App\Models\User;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -46,5 +47,20 @@ class SubjectResource extends Resource
             'create' => CreateSubject::route('/create'),
             'edit' => EditSubject::route('/{record}/edit'),
         ];
+    }
+
+    public static function canViewAny(): bool
+    {
+        $user = auth()->user();
+
+        if (! $user) {
+            return false;
+        }
+
+        if ($user->isAdmin()) {
+            return true;
+        }
+
+        return $user->can('manage subjects');
     }
 }
